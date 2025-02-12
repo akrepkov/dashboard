@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Zone</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column; /* Allow the header to be on top */
+            height: 100vh;
+        }
+			/* #575A9c */
+        .header {
+            background-color: white;
+            color: #5e3939;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 30px;
+        }
+        
+        .header .logo {
+            display: flex;
+            align-items: center;
+        }
+        .header img {
+            width: 126px;
+            height: 33px;
+			margin-right : 30px;
+        }
+        /* Main content area */
+        .main-content {
+            flex: 1;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Dashboard content */
+        .content {
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 1fr 2fr; /* Left side for 3 cards, right side for graph */
+            gap: 10px;
+        }
+        
+        /* Card container */
+        .cards-container {
+            display: grid;
+            grid-template-rows: repeat(3, 1fr); /* 3 cards stacked vertically */
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            justify-content: space-between;
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            font-size: 24px;
+        }
+
+        /* Graph card */
+        .graph-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .graph-card h3 {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+	<div class="header">
+        <div class="logo">
+            <img src="logo.avif" alt="Logo">
+            <h1>Smart Zones Performance</h1>
+        </div>
+    </div>
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Dashboard Widgets/Content -->
+        <div class="content">
+            <!-- Left side: 3 cards -->
+            <div class="cards-container">
+                <div class="card">
+                    <h3>Total number of parking activities</h3>
+                    <p><span id="number"></span></p>
+                </div>
+                <div class="card">
+                    <h3>Average parking duration</h3>
+                    <p><span id="number2"></span></p>
+                </div>
+                <div class="card">
+                    <h3>Occupancy rate over a defined time period</h3>
+                    <p><span id="number3"></span></p>
+                </div>
+            </div>
+            
+            <!-- Right side: Graph -->
+            <div class="graph-card">
+                <h3>GRAPH</h3>
+                <p>????</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+    <script>
+        fetch('data.json')
+            .then(response => response.json())  // Parse the JSON response
+            .then(data => {
+                document.getElementById("number").textContent = data.number;
+				document.getElementById("number2").textContent = data.number2;
+				document.getElementById("number3").textContent = data.number3;
+            })
+            .catch(error => console.error('Error loading JSON:', error));  // Error handling
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+Calculate the day of the week:
+
+SELECT strftime('%A', timestamp) AS day_of_week FROM parking_status;
+
+
+Change numbers in json
+
+Add graph
+
+How to link sqlite query to json file?
