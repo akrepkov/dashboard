@@ -8,3 +8,6 @@ Change numbers in json
 Add graph
 
 How to link sqlite query to json file?
+
+
+To run it I need VS code with "Live Server"

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Zone</title>
     <style>
+		h1 {
+			text-align: center;
+		}
         * {
             margin: 0;
             padding: 0;
@@ -88,6 +91,14 @@
         .graph-card h3 {
             margin-bottom: 15px;
         }
+		.basement {
+            background-color: #575A9c;
+            color: #5e3939;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 30px;			
+		}
     </style>
 </head>
 <body>
@@ -120,23 +131,71 @@
             <!-- Right side: Graph -->
             <div class="graph-card">
                 <h3>GRAPH</h3>
-                <p>????</p>
+                <canvas id="myChart"></canvas>
             </div>
         </div>
     </div>
+	<div class="basement">
+        <div class="Contacts">
+            <p>Coding the curbs</p>
+        </div>
+    </div>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+	<script>
+		fetch('data.json')
+			.then(response => response.json())  // Parse the JSON response
+			.then(data => {
+				// Access the hours_per_day object from the fetched data
+				const hoursPerDay = data.hours_per_day;
+				const days = hoursPerDay.map(entry=>entry.date);
+				const hours = hoursPerDay.map(entry=>entry.hours_on);
+				new Chart("myChart", {
+					type: "bar",
+					data: {
+						labels: days,
+						datasets: [{
+							label: "Hours Sensor On",
+							data: hours,
+							backgroundColor: "#575A9c",
+							borderColor: "rgba(75,192,192,1)",
 
+						}]
+					},
+					options: {
+						responsive: true,
+						scales: {
+							x: {
+								title: {
+									display: true,
+								},
+							},
+							y: {
+								title: {
+									display: true,
+									text: "Hours"
+								}
+							}
+						}
+					}
+				});
+			})
+			.catch(error => console.error('Error loading JSON:', error));  // Error handling
+	</script>
+	
 </body>
 </html>
 
-    <script>
-        fetch('data.json')
-            .then(response => response.json())  // Parse the JSON response
-            .then(data => {
-                document.getElementById("number").textContent = data.number;
-				document.getElementById("number2").textContent = data.number2;
-				document.getElementById("number3").textContent = data.number3;
-            })
-            .catch(error => console.error('Error loading JSON:', error));  // Error handling
-    </script>
-</body>
-</html>
+
+
+
+
+
+<!-- // fetch('data_static.json')
+//     .then(response => response.json())  // Parse the JSON response
+//     .then(data_static => {
+// 		const data = data_static[0];  // Access the first object in the array
+// 		document.getElementById("number").textContent = data.number;
+// 		document.getElementById("number2").textContent = data.number2;
+// 		document.getElementById("number3").textContent = data.number3;
+// 	})
+//     .catch(error => console.error('Error loading JSON:', error));  // Error handling -->
