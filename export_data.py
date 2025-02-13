@@ -1,7 +1,7 @@
 import sqlite3
 import json
 from datetime import datetime
-
+from collections import defaultdict
 connection = sqlite3.connect('coding_curbs.db')
 # cursor - pointer that helps to interact with db
 cursor = connection.cursor() 
@@ -26,10 +26,12 @@ data_as_dicts = [dict(zip(columns, row)) for row in rows]
 # row - values
 # zip - creates iterator , and makes the key-value pairs: ("status": 0), ("timestamp": "2024-10-10 07:05:01"), 
 # dict - creates the dictionary 
-from datetime import datetime
 
 def calculate_hours_on(data):
+	amount_of_days = 0
+	total_duration = 0
 	hours_per_day = {}
+	hour_frequency = defaultdict(int)
 	current_period_start = None
 	previous_date = None  # Initialize previous_date to None
 
@@ -41,6 +43,7 @@ def calculate_hours_on(data):
 		if previous_date is not None and previous_date != current_date:
 			# If the date has changed, reset the start time for the new day
 			current_period_start = datetime.combine(current_date, datetime.min.time())
+			amount_of_days += 1
 
 		if status == 1 and current_period_start is None:
 			current_period_start = current_time  # Start a new "on" period
@@ -52,16 +55,27 @@ def calculate_hours_on(data):
 			if current_date not in hours_per_day:
 				hours_per_day[current_date] = 0
 			hours_per_day[current_date] += time_diff
+			total_duration +=time_diff
 
+			#calculating peak hour
+			hour_of_day = current_time.hour
+			hour_frequency[hour_of_day] += 1
+			
+			
 			current_period_start = None
 		
 		# Update previous_date for the next iteration
 		previous_date = current_date
+	peak_hour = max(hour_frequency, key=hour_frequency.get)
+	average_duration = total_duration / amount_of_days
+	return hours_per_day, average_duration, peak_hour
 
-	return hours_per_day
 
+hours_on, average_duration = calculate_hours_on(data_as_dicts)
 
-hours_on = calculate_hours_on(data_as_dicts)
+total_parking_activities = len(rows)
+
+print(f"average {average_duration}")
 
 for entry in data_as_dicts:
     timestamp = entry['timestamp']
