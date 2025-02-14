@@ -21,6 +21,24 @@
             flex-direction: column; /* Allow the header to be on top */
             height: 100vh;
         }
+        /* #575A9c */
+        .header {
+            background-color: #e4e4e6;
+            color: #3a1010;
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 30px;
+        }
+        
+        .header .logo {
+            display: flex;
+            align-items: center;
+        }
+        .header img {
+            width: 126px;
+            height: 33px;
+			margin-right : 30px;
+        }        /* Main content area */
         .main-content {
             flex: 1;
             /* background-color: white; */
@@ -28,56 +46,51 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: top;
+            justify-content: center;
         }
         /* Dashboard content */
         .content {
-            padding: 0px;
+            padding: 20px;
             display: grid;
             align-items: center;
             grid-template-columns: 1fr; /* Single column layout */
+            grid-column-gap: 50px;
+            grid-template-rows: 1fr auto;
             gap: 20px; /* Add some space between the cards and the graph */
         }
 
         .cards-container {
             display: grid;
-            background-color: #e4e4e6;
             grid-template-columns: 1fr 1fr 1fr; /* Three cards in a row */
             justify-items: center;
-
+            gap: 30px; /* Add space between the cards */
+            /* margin-left: 20px; */
 
         }
 
         .card {
-            background-color: #e4e4e6;
+            background-color: white;
             /* border: 2px solid #575A9c;
             border-radius: 10px; */
+            padding: 20px;
             text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: bottom;
+            align-items: center;
+            justify-content: center;
             width: 100%;
+        }
+        .card h1 {
             margin-top: 50px;
-            margin-bottom: 0px;
+
         }
-        .card-text {
-            background-color: #e4e4e6;
-            /* border: 2px solid #575A9c;
-            border-radius: 10px; */
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: top;
-            margin-top: 0px;
-            width: 100%;
-        }
+
         .graph-card {
-            background-color: #e4e4e6;
+            background-color: white;
             /* border-radius: 10px; */
-            padding: 50px;
+            padding: 20px;
             text-align: center;
-            max-height: 80vh;
-            margin-top: 30 px;
+            max-height: 70vh;
 
         }
 		.basement {
@@ -91,29 +104,33 @@
     </style>
 </head>
 <body>
+	<div class="header">
+        <div class="logo">
+            <img src="logo.avif" alt="Logo">
+        </div>
+        <div class="logo">
+            <h2>Smart Zones Performance</h2>
+        </div>
+    </div>
+
+    <!-- Main Content -->
     <div class="main-content">
         <!-- Dashboard Widgets/Content -->
         <div class="content">
             <!-- Left side: 3 cards -->
             <div class="cards-container">
                 <div class="card">
-                    <h1 id="total_parking_activities"></h1>
+                    <h3>Total number of parking activities</h3>
+                    <p><h1 id="total_parking_activities"></h1></p>
                 </div>
                 <div class="card">
-                    <h1 id="average_duration"></h1>
+                    <h3>Average parking duration</h3>
+                    <p><h1 id="average_duration"></h1></p>
                 </div>
                 <div class="card">
-                    <h1 id="peak_hour"></h1>
-                </div>
-            </div>
-            <div class="cards-container">
-                <div class="card-text">
-                    <p>Total number of parking activities</p>                </div>
-                <div class="card-text">
-                    <p>Average parking duration</p> 
-                </div>
-                <div class="card-text">
-                    <p>Peak hour</p> 
+                    <h3>Peak hour</h3>
+                    <!-- <br> -->
+                    <p><h1 id="peak_hour"></h1></p>
                 </div>
             </div>
             <!-- Right side: Graph -->
@@ -123,9 +140,13 @@
             </div>
         </div>
     </div>
+	<!-- <div class="basement">
+        <div class="Contacts">
+        </div> -->
+    </div>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
 	<script>
-		fetch('863213040198520.json')
+		fetch('data.json')
 
         .then(response => response.json())  // Parse the JSON response
         .then(data => {
@@ -175,3 +196,17 @@
 </body>
 </html>
 
+
+
+
+
+
+<!-- // fetch('data_static.json')
+//     .then(response => response.json())  // Parse the JSON response
+//     .then(data_static => {
+// 		const data = data_static[0];  // Access the first object in the array
+// 		document.getElementById("number").textContent = data.number;
+// 		document.getElementById("number2").textContent = data.number2;
+// 		document.getElementById("number3").textContent = data.number3;
+// 	})
+//     .catch(error => console.error('Error loading JSON:', error));  // Error handling -->
