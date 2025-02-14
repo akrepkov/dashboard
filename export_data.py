@@ -67,15 +67,15 @@ def calculate_hours_on(data):
 		# Update previous_date for the next iteration
 		previous_date = current_date
 	peak_hour = max(hour_frequency, key=hour_frequency.get)
-	average_duration = total_duration / amount_of_days
+	average_duration = round(total_duration / amount_of_days, 1)
 	return hours_per_day, average_duration, peak_hour
 
 
-hours_on, average_duration = calculate_hours_on(data_as_dicts)
+hours_on, average_duration, peak_hour = calculate_hours_on(data_as_dicts)
 
 total_parking_activities = len(rows)
 
-print(f"average {average_duration}")
+# print(f"average {average_duration}")
 
 for entry in data_as_dicts:
     timestamp = entry['timestamp']
@@ -86,7 +86,10 @@ for entry in data_as_dicts:
 
 output_data = {
     "sensor_data": data_as_dicts,
-    "hours_per_day": [{"date": str(date), "hours_on": hours} for date, hours in hours_on.items()]
+    "hours_per_day": [{"date": str(date), "hours_on": hours} for date, hours in hours_on.items()],
+	"total_parking_activities": total_parking_activities,
+	"average_duration": average_duration,
+	"peak_hour": peak_hour
 }
 
 json_data = json.dumps(output_data, indent=4)
@@ -97,4 +100,4 @@ with open("data.json", "w") as json_file:
 cursor.close()
 connection.close()
 
-# To run it: python3 export_data.py
+# To run it: python export_data.py

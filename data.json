@@ -4948,5 +4948,8 @@
             "date": "2024-11-11",
             "hours_on": 10.505833333333332
         }
-    ]
+    ],
+    "total_parking_activities": 803,
+    "average_duration": 4.6,
+    "peak_hour": 11
 }
