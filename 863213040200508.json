@@ -4549,5 +4549,23 @@
     ],
     "total_parking_activities": 341,
     "average_duration": 5.21,
-    "peak_hour": 8
+    "peak_hour": 8,
+    "weekday_hours": {
+        "Sunday": 4.064166666666667,
+        "Monday": 34.823888888888895,
+        "Tuesday": 18.47833333333333,
+        "Wednesday": 17.515,
+        "Thursday": 11.93888888888889,
+        "Friday": 34.30861111111111,
+        "Saturday": 45.712500000000006
+    },
+    "weekday_percentages": {
+        "Sunday": 2.4359463162784345,
+        "Monday": 20.872452046105003,
+        "Tuesday": 11.075389300216939,
+        "Wednesday": 10.49799460232523,
+        "Thursday": 7.155831636501069,
+        "Friday": 20.563609149741353,
+        "Saturday": 27.398776948831976
+    }
 }

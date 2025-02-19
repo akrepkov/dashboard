@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Zone</title>
     <style>
 		h1 {
 			text-align: center;
@@ -108,7 +107,8 @@
             </div>
             <div class="cards-container">
                 <div class="card-text">
-                    <p>Total number of parking activities</p>                </div>
+                    <p>Total number of parking activities</p>
+				</div>
                 <div class="card-text">
                     <p>Average parking duration</p> 
                 </div>
@@ -121,12 +121,14 @@
                 <h3>Daily Sensor On Time</h3>
                 <canvas id="myChart"></canvas>
             </div>
+			<div class="graph-card">
+                <canvas id="myBarChart"></canvas>
+            </div>
         </div>
     </div>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
 	<script>
 		fetch('863213040198520.json')
-
         .then(response => response.json())  // Parse the JSON response
         .then(data => {
             // Access the hours_per_day object from the fetched data
@@ -162,12 +164,53 @@
 						}
 					}
 				});
+				const weekdayPercentages = data.weekday_percentages;
+				const percentageValues = Object.values(weekdayPercentages);
+				const percentageDays = Object.keys(weekdayPercentages);
+				const colors = [
+				"#777cd8",
+				"#94b1c6",
+				"#605ac1",
+				"#7a748a",
+				"#353786",
+				"#9d89d0",
+				"#77848d",
+				];
+				new Chart("myBarChart", {
+					type: "bar",
+					data: {
+						labels: percentageDays,
+						datasets: [{
+							label: "Busiest days (%)",
+							data: percentageValues,
+							backgroundColor: colors,
+							borderColor: "rgba(75,192,192,1)",
+						}]
+					},
+					options: {
+						responsive: true,
+						scales: {
+							x: {
+								title: {
+									display: true,
+									text: "Days of the Week"
+								},
+							},
+							y: {
+								title: {
+									display: true,
+									text: "Percentage (%)"
+								},
+								beginAtZero: true
+							}
+						}
+					}
+				});
                 const peakHour = data.peak_hour;
                 const peakTimeRange = `${peakHour}:00-${peakHour + 1}:00`;
                 document.getElementById("total_parking_activities").textContent = data.total_parking_activities;
                 document.getElementById("average_duration").textContent = data.average_duration;
                 document.getElementById("peak_hour").textContent = peakTimeRange;
-
 			})
 			.catch(error => console.error('Error loading JSON:', error));  // Error handling
 	</script>

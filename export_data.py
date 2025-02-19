@@ -54,7 +54,7 @@ def calculate_hours_on(data):
 	return hours_per_day, average_duration, peak_hour, status_changes
 
 def process_sensor_data(sensor_id, sensor_filename):
-	connection = sqlite3.connect('coding_curbs.db')
+	connection = sqlite3.connect('data.db')
 	# cursor - pointer that helps to interact with db
 	cursor = connection.cursor() 
 
@@ -92,13 +92,36 @@ def process_sensor_data(sensor_id, sensor_filename):
 		current_date = current_time.date()
 		entry['hours_on'] = hours_on.get(current_date, 0)
 
+	weekday_hours = {
+		"Sunday": 0,
+		"Monday": 0,
+		"Tuesday": 0,
+		"Wednesday": 0,
+		"Thursday": 0,
+		"Friday": 0,
+		"Saturday": 0
+	}
+
+	for date, hours in hours_on.items():
+    # Convert date to day of the week
+		day_of_week = datetime.strptime(str(date), "%Y-%m-%d").strftime("%A")
+		weekday_hours[day_of_week] += hours
+
+	total_hours = sum(weekday_hours.values())
+
+	# Calculate percentage for each day
+	weekday_percentages = {
+		day: (hours / total_hours) * 100 for day, hours in weekday_hours.items()
+	}
 	output_data = {
 		"sensor_data": data_as_dicts,
 		"hours_per_day": [{"date": str(date), "hours_on": hours} for date, hours in hours_on.items()],
 		"total_parking_activities": total_parking_activities,
 		"average_duration": average_duration,
-		"peak_hour": peak_hour
-	}
+		"peak_hour": peak_hour,
+		"weekday_hours": weekday_hours,
+		"weekday_percentages": weekday_percentages
+	} 
 
 	json_data = json.dumps(output_data, indent=4)
 	with open(sensor_filename, "w") as json_file:
