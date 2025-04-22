@@ -52,4 +52,3 @@ Depending on the chosen sensor (named after cities for easier interaction), the 
     python export_data.py
     ```
 3. **Open the `main.html` file** in any web browser to view the dashboard.
-

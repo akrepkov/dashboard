@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+	<div class="header">
+		<h1>Parking data</h1>
+    </div>
+    <div class="tab-container">
+        <!-- Tabs on the left -->
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'Utrecht')">Utrecht</button>
+            <button class="tablinks" onclick="openTab(event, 'Groningen')">Groningen</button>
+            <button class="tablinks" onclick="openTab(event, 'Amersfoort')">Amersfoort</button>
+            <button class="tablinks" onclick="openTab(event, 'Rotterdam')">Rotterdam</button>
+        </div>
+        <div id="Utrecht" class="tabcontent">
+            <div class="chart-container">
+                <canvas id="pie-Utrecht" class="pie_chart"></canvas>
+                <canvas id="chart-Utrecht" class="bar_chart"></canvas>
+            </div>
+        </div>
+        <div id="Groningen" class="tabcontent">
+            <div class="chart-container">
+                <canvas id="pie-Groningen" class="pie_chart"></canvas>
+                <canvas id="chart-Groningen" class="bar_chart"></canvas>
+            </div>
+        </div>
+        <div id="Amersfoort" class="tabcontent">
+            <div class="chart-container">
+                <canvas id="pie-Amersfoort" class="pie_chart"></canvas>
+                <canvas id="chart-Amersfoort" class="bar_chart"></canvas>
+            </div>
+        </div>
+        <div id="Rotterdam" class="tabcontent">
+            <div class="chart-container">
+                <canvas id="pie-Rotterdam" class="pie_chart"></canvas>
+                <canvas id="chart-Rotterdam" class="bar_chart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="../static/chart.js"></script>
+    <script>
+        window.onload = function() {
+            document.querySelector('.tablinks').click();
+        };
+        function openTab(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            loadCityData(cityName); 
+        }
+    </script>
+	
+</body>
+</html>
+
+
+
+
